@@ -49,6 +49,8 @@ Primary use:	Blast HTML Template
 	Fonts
 ==============================*/
 
+@import url('https://fonts.cdnfonts.com/css/vice-versus');
+
 @font-face {
     font-family: IRANSans;
     font-style: normal;
@@ -983,12 +985,35 @@ body::-webkit-scrollbar-thumb {
     width: 100%;
     padding: 0 30px 0 15px;
     border-bottom: 2px solid #e6eaf2;
+    text-align: center;
 }
 
 .sidebar__logo img {
     width: 100px;
     height: auto;
     display: block;
+}
+
+.logo-text {
+    width: 100%;
+    margin: auto;
+    text-align: center;
+}
+
+.logo-text  span {
+    font-size: 120%;
+    display: block;
+    text-align: center;
+    color: #f65656;
+    font-family: 'Vice Versus', sans-serif;
+    transform: translateY(-5px);
+}
+
+.logo-text span:first-of-type {
+    color: #626f83;
+    font-size: 70%;
+    font-family: 'IRANSans';
+    transform: translateY(2px);
 }
 
 .sidebar__nav {
@@ -1087,8 +1112,9 @@ body::-webkit-scrollbar-thumb {
 }
 
 .sidebar__menu--scroll {
-    height: 165px;
+    height: 185px;
     overflow: hidden;
+    overflow-y: auto;
 }
 
 .sidebar__menu li {
@@ -1314,7 +1340,7 @@ body::-webkit-scrollbar-thumb {
     transform: scale(0.8);
 }
 
-.icon--not-pressed{
+.icon--not-pressed {
     color: #f65656;
 }
 
