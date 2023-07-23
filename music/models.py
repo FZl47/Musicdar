@@ -17,7 +17,7 @@ class MusicManager(models.Manager):
     def get_trends(self, count=5):
         return super(MusicManager, self).get_queryset().all().order_by('-views')[:count]
 
-    def create_unique_or_none(self,**kwargs):
+    def create_unique_or_none(self, **kwargs):
         # Unique by 'name'
         if self.filter(name=kwargs['name']).exists():
             return None
@@ -67,9 +67,16 @@ class ArtistManager(models.Manager):
     def get_by_name_or_create(self, name):
         try:
             artist_obj = self.get(name__contains=name)
-        except:
+        except models.ObjectDoesNotExist:
             artist_obj = self.create(name=name)
         return artist_obj
+
+    def get_default(self):
+        try:
+            obj = self.get(name=settings.NAME_ARTIST_DEFAULT)
+        except models.ObjectDoesNotExist:
+            obj = self.create(name=settings.NAME_ARTIST_DEFAULT)
+        return obj
 
 
 class Artist(BaseModel):
@@ -93,7 +100,7 @@ class CategoryManager(models.Manager):
     def get_by_name_or_default(self, name):
         try:
             category_obj = self.get(name__contains=name)
-        except models.ObjectDoesNotExist as e:
+        except models.ObjectDoesNotExist:
             try:
                 category_obj = self.get(name=settings.NAME_CATEGORY_DEFAULT)
             except models.ObjectDoesNotExist:
