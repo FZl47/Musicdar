@@ -64,11 +64,22 @@ class ArtistManager(models.Manager):
             pass
         return objs[:count]
 
-    def get_by_name_or_create(self, name):
+    def get_or_create(self, **kwargs):
         try:
-            artist_obj = self.get(name__contains=name)
+            artist_obj = self.get(**kwargs)
         except models.ObjectDoesNotExist:
-            artist_obj = self.create(name=name)
+            artist_obj = self.create(**kwargs)
+        return artist_obj
+
+    def get_or_default(self, **kwargs):
+        try:
+            artist_obj = self.get(**kwargs)
+        except models.ObjectDoesNotExist:
+            try:
+                artist_obj = self.get(name=settings.NAME_ARTIST_DEFAULT)
+            except models.ObjectDoesNotExist:
+                # create default artist
+                artist_obj = self.create(name=settings.NAME_ARTIST_DEFAULT)
         return artist_obj
 
     def get_default(self):
@@ -97,9 +108,9 @@ class Artist(BaseModel):
 
 class CategoryManager(models.Manager):
 
-    def get_by_name_or_default(self, name):
+    def get_or_default(self, **kwargs):
         try:
-            category_obj = self.get(name__contains=name)
+            category_obj = self.get(**kwargs)
         except models.ObjectDoesNotExist:
             try:
                 category_obj = self.get(name=settings.NAME_CATEGORY_DEFAULT)
