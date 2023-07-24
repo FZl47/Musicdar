@@ -7,6 +7,7 @@ from music import models
 class MusicSerializer(ModelSerializer):
     category_name = serializers.CharField(max_length=200, required=False)
     artist_name = serializers.CharField(max_length=20, required=False)
+    create_singer = serializers.BooleanField(required=False)
 
     class Meta:
         model = models.Music
