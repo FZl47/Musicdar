@@ -20,16 +20,19 @@ class Music(APIView):
         data = s.validated_data
         # get Artist object by name or create
         artist_name = data.get('artist_name', None)
-        if artist_name:
-            artist_obj = models.Artist.objects.get_by_name_or_create(artist_name)
+        create_singer = data.get('create_singer', False)
+        if artist_name and create_singer:
+            artist_obj = models.Artist.objects.get_or_create(name=artist_name)
         else:
-            artist_obj = models.Artist.objects.get_default()
+            artist_obj = models.Artist.objects.get_or_default(name=artist_name)
         # get Category object by name or get default
         category_name = data.get('category_name', '')
-        category_obj = models.Category.objects.get_by_name_or_default(category_name)
+        category_obj = models.Category.objects.get_or_default(name=category_name)
 
+        # Delete from data
         data.pop('artist_name', None)
         data.pop('category_name', None)
+        data.pop('create_singer', None)
 
         music_obj = models.Music.objects.create_unique_or_none(**data,
                                                                artist=artist_obj,
