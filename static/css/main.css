@@ -2875,6 +2875,40 @@ body::-webkit-scrollbar-thumb {
     color: #f65656;
 }
 
+.music__action{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 10;
+    background: #fff;
+    padding: 6px;
+    border-radius: 5px;
+}
+
+.music__action svg{
+    width: 24px;
+    height: 24px;
+    color:#626f83 ;
+}
+
+.music__action button{
+    margin: 0 3px;
+    transition: all .25s;
+}
+
+.btn-download-music:hover{
+      transform: scale(1.08);
+}
+
+
+.btn-like-music:hover svg{
+    fill: #f65656;
+    stroke: #f65656;
+}
+
+
+
+
 .album__stat {
     position: absolute;
     z-index: 2;
