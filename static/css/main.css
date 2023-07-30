@@ -2772,6 +2772,8 @@ body::-webkit-scrollbar-thumb {
 
 .album__cover img {
     width: 100%;
+    height: 260px;
+    object-fit: cover;
     display: block;
     position: relative;
     z-index: 1;
