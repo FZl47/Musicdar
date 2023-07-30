@@ -4,7 +4,7 @@ from rest_framework import serializers
 from music import models
 
 
-class MusicSerializer(ModelSerializer):
+class MusicCreateSerializer(ModelSerializer):
     category_name = serializers.CharField(max_length=200, required=False)
     artist_name = serializers.CharField(max_length=20, required=False)
     create_singer = serializers.BooleanField(required=False)
@@ -27,3 +27,10 @@ class MusicResponseSerializer(ModelSerializer):
     class Meta:
         model = models.Music
         fields = ('sku', 'name', 'url')
+
+
+class MusicDeleteSerializer(ModelSerializer):
+
+    class Meta:
+        model = models.Music
+        fields = ('sku',)
