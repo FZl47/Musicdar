@@ -15,7 +15,7 @@ class Test(APIView):
 class Music(APIView):
 
     def post(self, request):
-        s = serializers.MusicSerializer(data=request.data)
+        s = serializers.MusicCreateSerializer(data=request.data)
         s.is_valid(raise_exception=True)
         data = s.validated_data
         # get Artist object by name or create
@@ -40,7 +40,18 @@ class Music(APIView):
         if music_obj is None:
             # Music is duplicate
             raise Conflict('Music is duplicate')
-        return Response(serializers.MusicResponseSerializer(music_obj).data,status=status.HTTP_201_CREATED)
+        return Response(serializers.MusicResponseSerializer(music_obj).data, status=status.HTTP_201_CREATED)
+
+    def delete(self, request):
+        s = serializers.MusicDeleteSerializer(data=request.data)
+        s.is_valid(raise_exception=True)
+        data = s.validated_data
+        sku = data.get('sku')
+        music_obj = models.Music.objects.get(sku=sku)
+        music_obj.delete()
+        return Response({
+            'message': 'music deleted successfully !'
+        })
 
 
 class Artist(APIView):
