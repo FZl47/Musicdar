@@ -20,12 +20,13 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
-    path('',include('public.urls',namespace='public')),
     path('admin/', admin.site.urls),
+    path('',include('public.urls',namespace='public')),
+    path('musics/',include('music.urls',namespace='music')),
 
     # API
     # music api
-    path('api/v1/',include('music.api.urls',namespace='music'))
+    path('api/v1/',include('music.api.urls',namespace='music_api'))
 
 ]
 

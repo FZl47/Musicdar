@@ -146,3 +146,6 @@ CORS_ALLOWED_ORIGINS = []  # TODO: should be set
 
 NAME_CATEGORY_DEFAULT = 'موزیک'
 NAME_ARTIST_DEFAULT = 'بدون خواننده'
+
+
+FULL_DOMAIN_URL = 'http://127.0.0.1:8001'

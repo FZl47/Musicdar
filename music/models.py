@@ -1,6 +1,7 @@
 import random
 from django.db import models
 from django.conf import settings
+from django.urls import reverse
 from django.utils.crypto import get_random_string
 from core.models import BaseModel
 
@@ -45,8 +46,12 @@ class Music(BaseModel):
     def __str__(self):
         return self.name
 
+    def get_slug(self):
+        name = self.name.replace(' ','-')
+        return f'{self.id}-{name}'
+
     def get_absolute_url(self):
-        pass  # TODO : should be complete
+        return f"{settings.FULL_DOMAIN_URL}{reverse('music:music_detail', args=(self.get_slug(),))}"
 
 
 class Podcast(Music):
@@ -79,7 +84,7 @@ class ArtistManager(models.Manager):
                 artist_obj = self.get(name=settings.NAME_ARTIST_DEFAULT)
             except models.ObjectDoesNotExist:
                 # create default artist
-                artist_obj = self.create(name=settings.NAME_ARTIST_DEFAULT)
+                artist_obj = self.create(name=settings.NAME_ARTIST_DEFAULT,is_default=True)
         return artist_obj
 
     def get_default(self):
@@ -94,6 +99,7 @@ class Artist(BaseModel):
     name = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
     images_url = models.TextField(null=True, blank=True, default='', help_text='should split by "|" ')
+    is_default = models.BooleanField(default=False)
 
     # gallery = models.ForeignKey('public.Gallery', on_delete=models.SET_NULL, null=True,blank=True)
 
